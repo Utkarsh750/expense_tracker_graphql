@@ -10,7 +10,13 @@ import { expressMiddleware } from "@apollo/server/express4";
 import mergedResolvers from "./resolvers/index.js";
 import mergedTypedefs from "./typeDefs/index.js";
 
-dotenv.config();
+import path from "path";
+const __dirname = path.resolve();
+
+import { connectDB } from "./db/connectDB.js";
+dotenv.config({
+  path: __dirname + "/backend/.env",
+});
 
 const app = express();
 
@@ -37,5 +43,6 @@ app.use(
 
 // Modified server startup
 await new Promise((resolve) => httpServer.listen({ port: 4000 }, resolve));
+await connectDB();
 
 console.log(`🚀 Server ready at http://localhost:4000/`);
