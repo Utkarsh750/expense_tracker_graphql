@@ -19,7 +19,7 @@ import path from "path";
 const __dirname = path.resolve();
 
 import { connectDB } from "./db/connectDB.js";
-import { Session } from "express-session";
+import  session  from "express-session";
 import { configurePassport } from "./passport/passport.config.js";
 dotenv.config({
   path: __dirname + "/backend/.env",
