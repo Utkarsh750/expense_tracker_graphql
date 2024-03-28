@@ -38,7 +38,14 @@ const userResolver = {
           gender,
           profilePicture: gender === "male" ? boyProfilePic : girlProfilePic,
         });
-      } catch (error) {}
+
+        await newUser.save();
+        await context.login(newUser);
+        return newUser;
+      } catch (error) {
+        console.error("Error in signup", error);
+        throw new Error(error.message || "Internal server error");
+      }
     },
   },
 };
