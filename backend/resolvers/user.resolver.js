@@ -47,6 +47,7 @@ const userResolver = {
         throw new Error(error.message || "Internal server error");
       }
     },
+    login: () => 
   },
 };
 
