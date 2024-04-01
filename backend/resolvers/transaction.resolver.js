@@ -53,7 +53,17 @@ const transactionResolver = {
         throw new Error("Error getting transaction");
       }
     },
-    deleteTransaction: async () => {},
+    deleteTransaction: async (_, { transactionId }) => {
+      try {
+        const deletedTransaction = await Transaction.findByIdAndDelete(
+          transactionId
+        );
+        return deletedTransaction;
+      } catch (error) {
+        console.error("Error getting transaction", error);
+        throw new Error("Error getting transaction");
+      }
+    },
   },
 };
 export default transactionResolver;
