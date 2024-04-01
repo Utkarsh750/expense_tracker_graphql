@@ -24,6 +24,36 @@ const transactionResolver = {
       }
     },
   },
-  Mutation: {},
+  Mutation: {
+    createTransaction: async (_, { input }, context) => {
+      try {
+        const newTransaction = new Transaction({
+          ...input,
+          userId: context.getUser()._id,
+        });
+        await newTransaction.save();
+        return newTransaction;
+      } catch (error) {
+        console.error("Error getting transaction", error);
+        throw new Error("Error getting transaction");
+      }
+    },
+    updateTransaction: async (_, { input }) => {
+      try {
+        const updatedTransaction = await Transaction.findByIdAndUpdate(
+          input.transactionId,
+          input,
+          {
+            new: true,
+          }
+        );
+        return updatedTransaction;
+      } catch (error) {
+        console.error("Error getting transaction", error);
+        throw new Error("Error getting transaction");
+      }
+    },
+    deleteTransaction: async () => {},
+  },
 };
 export default transactionResolver;
