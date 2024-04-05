@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import InputField from "../component/InputField";
 import RadioButton from "../component/RadioButton";
 
-
 const SignUpPage = () => {
   const [signUpData, setSignUpData] = useState({
     name: "",
@@ -30,6 +29,7 @@ const SignUpPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    alert("SignUp Successfully");
     console.log(signUpData);
   };
 
