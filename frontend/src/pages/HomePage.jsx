@@ -1,9 +1,6 @@
 import { Doughnut } from "react-chartjs-2";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 
-// import Cards from "../components/Cards";
-// import TransactionForm from "../components/TransactionForm";
-
 import { MdLogout } from "react-icons/md";
 import TransactionForm from "../component/TransactionForm";
 import Cards from "../component/Cards";

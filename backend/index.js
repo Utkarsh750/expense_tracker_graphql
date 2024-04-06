@@ -2,9 +2,9 @@ import express from "express";
 import http from "http";
 import cors from "cors";
 import dotenv from "dotenv";
+import session from "express-session";
 
 import passport from "passport";
-import session from "express-session";
 import ConnectMongo from "connect-mongodb-session";
 import { ApolloServer } from "@apollo/server";
 import { ApolloServerPluginDrainHttpServer } from "@apollo/server/plugin/drainHttpServer";
@@ -16,20 +16,21 @@ import mergedResolvers from "./resolvers/index.js";
 import mergedTypedefs from "./typeDefs/index.js";
 
 import path from "path";
-const __dirname = path.resolve();
 
 import { connectDB } from "./db/connectDB.js";
-import  session  from "express-session";
 import { configurePassport } from "./passport/passport.config.js";
-dotenv.config({
-  path: __dirname + "/backend/.env",
-});
 
-configurePassport()
+// dotenv.config();
+configurePassport();
+
+const __dirname = path.resolve();
 const app = express();
 
 const httpServer = http.createServer(app);
 
+dotenv.config({
+  path: __dirname + "/backend/.env",
+});
 const MongoDBStore = ConnectMongo(session);
 const store = new MongoDBStore({
   uri: process.env.MONGO_URI,
