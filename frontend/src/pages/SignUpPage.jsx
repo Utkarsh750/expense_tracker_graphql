@@ -2,6 +2,8 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import InputField from "../component/InputField";
 import RadioButton from "../component/RadioButton";
+import { useMutation } from "@apollo/client";
+import { SIGN_UP } from "../graphql/queries/mutations/user.mutation";
 
 const SignUpPage = () => {
   const [signUpData, setSignUpData] = useState({
@@ -11,6 +13,7 @@ const SignUpPage = () => {
     gender: "",
   });
 
+  const [signup, { loading, error }] = useMutation(SIGN_UP);
   const handleChange = (e) => {
     const { name, value, type } = e.target;
 
