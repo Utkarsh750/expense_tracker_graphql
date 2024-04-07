@@ -1,6 +1,7 @@
 const userTypeDef = `
 type User {
     _id: ID!
+    name: String
     username: String!
     email: String!
     password: String!
@@ -9,13 +10,12 @@ type User {
 }
 
 type Query {
-    users: [User!]
     authUser: User
     user(userId:ID!): User
 }
 
  type Mutation {
-    signup(input: SignUpInput!): User
+    signUp(input: SignUpInput!): User
     login(input: LoginInput!): User
     logout: LogoutResponse
  }
