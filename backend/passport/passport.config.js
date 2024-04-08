@@ -1,7 +1,7 @@
 import passport from "passport";
 import bcrypt from "bcryptjs";
 
-import {} from "../model/user.model.js"
+import User from "../model/user.model.js"
 import { GraphQLLocalStrategy } from "graphql-passport";
 
 export const configurePassport = async () => {
@@ -27,7 +27,7 @@ export const configurePassport = async () => {
         if (!user) {
           throw new Error("Invalid username or password");
         }
-        const validPassword = await bcrypt.compare(password, user.password);
+        const validPassword = bcrypt.compare(password, user.password);
 
         if (!validPassword) {
           throw new Error("Invalid username or password");
