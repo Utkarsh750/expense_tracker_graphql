@@ -59,17 +59,34 @@ const userResolver = {
         throw new Error(error.message || "Internal server error");
       }
     },
+
     login: async (_, { input }, context) => {
       try {
         const { username, password } = input;
         if (!username || !password) throw new Error("All fields are required");
-        const { user } = await context.authenticate("graphql-local", {
-          username,
-          password,
-        });
 
-        await context.login(user);
-        return user;
+        const user = await User.findOne({ username });
+        if (!user) {
+          throw new Error("User not found");
+        }
+
+        // Compare the provided password with the hashed password stored in the database
+        const isPasswordValid = await bcrypt.compare(password, user.password);
+        if (!isPasswordValid) {
+          throw new Error("Invalid password");
+        }
+
+        // Perform authentication and login
+        const { user: authenticatedUser } = await context.authenticate(
+          "graphql-local",
+          {
+            username,
+            password,
+          }
+        );
+
+        await context.login(authenticatedUser);
+        return authenticatedUser;
       } catch (err) {
         console.error("Error in login:", err);
         throw new Error(err.message || "Internal server error");

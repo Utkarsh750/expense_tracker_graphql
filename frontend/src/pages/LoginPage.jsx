@@ -3,7 +3,7 @@ import { useState } from "react";
 import InputField from "../component/InputField";
 import { useMutation } from "@apollo/client";
 import { LOGIN } from "../graphql/mutations/user.mutation";
-
+import toast from "react-hot-toast";
 const LoginPage = () => {
   const [loginData, setLoginData] = useState({
     username: "",
@@ -24,7 +24,8 @@ const LoginPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if(!loginData.username)
+    if (!loginData.username || !loginData.password)
+      return toast.error("All Fields are required");
     try {
       await login({
         variables: {
