@@ -3,18 +3,44 @@ import TransactionFormSkeleton from "../component/skeleton/TransactionFormSkelet
 
 const TransactionPage = () => {
   const [formData, setFormData] = useState({
-    description: "",
-    paymentType: "",
-    category: "",
-    amount: "",
-    location: "",
-    date: "",
+    description: data?.transaction?.description || "",
+    paymentType: data?.transaction?.paymentType || "",
+    category: data?.transaction?.category || "",
+    amount: data?.transaction?.amount || "",
+    location: data?.transaction?.location || "",
+    date: data?.transaction?.date || "",
   });
+
+  const [createTransaction, { loading }] = useMutation(CREATE_TRANSACTION);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("formData", formData);
+    const form = e.target;
+    const formData = new formData(form);
+    const transactionData = {
+      description: formData.get("description"),
+      paymentType: formData.get("paymentType"),
+      category: formData.get("category"),
+      amount: formData.get("amount"),
+      location: formData.get("location"),
+      date: formData.get("date"),
+    };
+    try {
+      await createTransaction({
+        variables: {
+          input: {
+            transactionData,
+          },
+        },
+      });
+      form.reset();
+      toast.success("Transaction Created Successfully");
+    } catch (error) {
+      console.error("Error", error);
+      toast.error(error.message);
+    }
   };
+
 
   const handleInputChange = (e) => {
     // this will runs whenever you type or changes any fields
