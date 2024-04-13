@@ -7,7 +7,6 @@ const Cards = () => {
 
   if (loading) return <p>Loading...</p>;
 
-  console.log("data:", data);
   return (
     <div className="w-full px-10 min-h-[40vh]">
       <p className="text-5xl font-bold text-center my-10">History</p>
