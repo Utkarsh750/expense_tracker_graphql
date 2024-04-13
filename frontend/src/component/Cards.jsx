@@ -1,9 +1,9 @@
-import { GET_TRANSACTION } from "../graphql/queries/transaction.query";
+import { GET_TRANSACTIONS } from "../graphql/queries/transaction.query";
 import Card from "./Card";
 import { useQuery } from "@apollo/client";
 
 const Cards = () => {
-  const { data, loading, error } = useQuery(GET_TRANSACTION);
+  const { data, loading, error } = useQuery(GET_TRANSACTIONS);
 
   if (loading) return <p>Loading...</p>;
 

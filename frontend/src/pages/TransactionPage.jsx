@@ -1,16 +1,26 @@
 import { useState } from "react";
 import TransactionFormSkeleton from "../component/skeleton/TransactionFormSkeleton";
+import { useQuery } from "@apollo/client";
+import { GET_TRANSACTION } from "../graphql/queries/transaction.query";
+import { useParams } from "react-router-dom";
 
 const TransactionPage = () => {
-  const [formData, setFormData] = useState({
-    description: "",
-    paymentType: "",
-    category: "",
-    amount: "",
-    location: "",
-    date: "",
+  const { id } = useParams();
+
+  const { loading, data } = useQuery(GET_TRANSACTION, {
+    variables: { id: id },
   });
 
+  const [formData, setFormData] = useState({
+    description: data?.transaction?.description || "",
+    paymentType: data?.transaction?.paymentType || "",
+    category: data?.transaction?.category || "",
+    amount: data?.transaction?.amount || "",
+    location: data?.transaction?.location || "",
+    date: data?.transaction?.date || "",
+  });
+
+  console.log(data, "data");
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("formData", formData);

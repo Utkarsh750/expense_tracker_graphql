@@ -1,4 +1,5 @@
 import Transaction from "../model/transaction.model.js";
+
 const transactionResolver = {
   Query: {
     transactions: async (_, __,context) => {
