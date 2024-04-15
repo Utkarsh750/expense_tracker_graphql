@@ -6,7 +6,7 @@ import TransactionForm from "../component/TransactionForm";
 import Cards from "../component/Cards";
 import { useMutation, useQuery } from "@apollo/client";
 import { LOGOUT } from "../graphql/mutations/user.mutation";
-import { GET_TRANSACTION_STATS } from "../graphql/queries/transaction.query";
+import { GET_TRANSACTION_STATISTICS } from "../graphql/queries/transaction.query";
 import { useEffect, useState } from "react";
 import { GET_AUTHENTICATED_USER } from "../graphql/queries/user.query";
 
@@ -28,10 +28,11 @@ import { GET_AUTHENTICATED_USER } from "../graphql/queries/user.query";
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 const HomePage = () => {
+  const { data } = useQuery(GET_TRANSACTION_STATISTICS);
+
   const [logout, { loading, client }] = useMutation(LOGOUT, {
     refetchQueries: ["GetAuthenticatedUser"],
   });
-  const { data } = useQuery(GET_TRANSACTION_STATS);
   const { data: authUserData } = useQuery(GET_AUTHENTICATED_USER);
 
   const [chartData, setChartData] = useState({
@@ -120,11 +121,10 @@ const HomePage = () => {
           )}
         </div>
         <div className="flex flex-wrap w-full justify-center items-center gap-6">
-          {data?.categoryStatistics.length > 0 && (
-            <div className="h-[330px] w-[330px] md:h-[360px] md:w-[360px]  ">
-              <Doughnut data={chartData} />
-            </div>
-          )}
+          <div className="h-[330px] w-[330px] md:h-[360px] md:w-[360px]  ">
+            <Doughnut data={chartData} />
+          </div>
+
           <TransactionForm />
         </div>
         <Cards />
