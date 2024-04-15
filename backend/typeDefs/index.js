@@ -8,7 +8,7 @@ const mergedTypeDefs = mergeTypeDefs([userTypeDef, transactionTypeDef]);
 
 export default mergedTypeDefs;
 
-// Why Merge Type Definitions? 🤔
+// Why Merge Type Definitions? 
 
 // Modularity: Merging type definitions allows you to keep related schema components in separate files, promoting modularity and organization.
 
