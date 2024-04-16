@@ -28,11 +28,11 @@ import { GET_AUTHENTICATED_USER } from "../graphql/queries/user.query";
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 const HomePage = () => {
-  const { data } = useQuery(GET_TRANSACTION_STATISTICS);
-
   const [logout, { loading, client }] = useMutation(LOGOUT, {
     refetchQueries: ["GetAuthenticatedUser"],
   });
+  const { data } = useQuery(GET_TRANSACTION_STATISTICS);
+
   const { data: authUserData } = useQuery(GET_AUTHENTICATED_USER);
 
   const [chartData, setChartData] = useState({
