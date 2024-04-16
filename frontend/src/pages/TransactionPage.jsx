@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import TransactionFormSkeleton from "../component/skeleton/TransactionFormSkeleton";
 import { useMutation, useQuery } from "@apollo/client";
 import { GET_TRANSACTION } from "../graphql/queries/transaction.query";
-import {UPDATE_TRANSACTION} from "../graphql/mutations/transaction.mutation"
+import { UPDATE_TRANSACTION } from "../graphql/mutations/transaction.mutation";
 import { useParams } from "react-router-dom";
 import toast from "react-hot-toast";
 
@@ -12,7 +12,7 @@ const TransactionPage = () => {
   const { loading, data } = useQuery(GET_TRANSACTION, {
     variables: { id: id },
   });
-
+  console.log(data, "Transaction");
   const [updateTransaction, { loading: loadingUpdate }] = useMutation(
     UPDATE_TRANSACTION,
     {
@@ -20,7 +20,7 @@ const TransactionPage = () => {
     }
   );
 
-  const [formData, setFormData] = useState({ 
+  const [formData, setFormData] = useState({
     description: data?.transaction?.description || "",
     paymentType: data?.transaction?.paymentType || "",
     category: data?.transaction?.category || "",

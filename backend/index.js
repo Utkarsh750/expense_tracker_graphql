@@ -3,6 +3,7 @@ import http from "http";
 import cors from "cors";
 import dotenv from "dotenv";
 import session from "express-session";
+import path from "path";
 
 import passport from "passport";
 import ConnectMongo from "connect-mongodb-session";
@@ -14,8 +15,6 @@ import { buildContext } from "graphql-passport";
 
 import mergedResolvers from "./resolvers/index.js";
 import mergedTypedefs from "./typeDefs/index.js";
-
-import path from "path";
 
 import { connectDB } from "./db/connectDB.js";
 import { configurePassport } from "./passport/passport.config.js";
@@ -78,6 +77,12 @@ app.use(
   })
 );
 
+// npm run build will build the frontend app with optimised version of out application
+app.use(express.static(path.join(__dirname, "frontend/dist")));
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "frontend/dist", "index.html"));
+});
 // Modified server startup
 await new Promise((resolve) => httpServer.listen({ port: 4000 }, resolve));
 await connectDB();
