@@ -23,8 +23,8 @@ export default job;
 // Cron jobs are scheduled tasks that run periodically at fixed intervals or specific times
 // send 1 GET request for every 14 minutes
 
-// Schedule:
-// You define a schedule using a cron expression, which consists of five fields representing:
+
+//  a schedule using a cron expression, which consists of five fields representing:
 
 //! MINUTE, HOUR, DAY OF THE MONTH, MONTH, DAY OF THE WEEK
 
