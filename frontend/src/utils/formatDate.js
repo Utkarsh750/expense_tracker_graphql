@@ -7,3 +7,4 @@ export function formatDate(timestamp) {
 const timestamp = 1704067200000;
 const formattedDate = formatDate(timestamp);
 console.log(formattedDate);
+
