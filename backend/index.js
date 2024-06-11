@@ -20,7 +20,10 @@ import { connectDB } from "./db/connectDB.js";
 import { configurePassport } from "./passport/passport.config.js";
 
 import job from "./cron.js";
-// dotenv.config();
+
+// Load environment variables from .env file
+dotenv.config();
+
 configurePassport();
 
 job.start();
@@ -29,9 +32,6 @@ const app = express();
 
 const httpServer = http.createServer(app);
 
-dotenv.config({
-  path: __dirname + "/backend/.env",
-});
 const MongoDBStore = ConnectMongo(session);
 const store = new MongoDBStore({
   uri: process.env.MONGO_URI,
@@ -72,21 +72,22 @@ app.use(
     credentials: true,
   }),
   express.json(),
-  // expressMiddleware accepts the same arguments:
-  // an Apollo Server instance and optional configuration options
   expressMiddleware(server, {
     context: async ({ req, res }) => buildContext({ req, res }),
   })
 );
 
-// npm run build will build the frontend app with optimised version of out application
+// npm run build will build the frontend app with optimised version of our application
 app.use(express.static(path.join(__dirname, "frontend/dist")));
 
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "frontend/dist", "index.html"));
 });
-// Modified server startup
-await new Promise((resolve) => httpServer.listen({ port: 4000 }, resolve));
+
+// Connect to MongoDB before starting the server
 await connectDB();
 
-console.log(`🚀 Server ready at http://localhost:4000/graphql`);
+// Modified server startup
+httpServer.listen({ port: 4000 }, () => {
+  console.log(`🚀 Server ready at http://localhost:4000/graphql`);
+});
